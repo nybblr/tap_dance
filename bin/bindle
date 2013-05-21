@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby
-#
+
+# Add lib directory to load path
+root = File.expand_path '../..', __FILE__
+lib  = File.join root, 'lib'
+$:.unshift(lib) unless $:.include?(lib)
+
 require 'rubygems'
 require 'thor'
 
-require 'bindler'
+require "bindler"
 
 Bindler::Bindle.start
