@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Bindler::VERSION
   spec.authors       = ["Jonathan Martin"]
   spec.email         = ["me@nybblr.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{Manage your OSX binaries on a per project and system basis. Powered by Homebrew, inspired by Bundler.}
+  spec.summary       = %q{Homebrew rocks, but managing system level dependencies can become a pain to track across multiple machines. Bundler was designed to make explicit declaration of Ruby dependencies consistent and painless. Bindler aims to do the same for system binaries.}
+  spec.homepage      = "https://github.com/nybblr"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -18,6 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_dependency "thor"
+  spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "guard"
+  spec.add_development_dependency "guard-rspec"
 end
