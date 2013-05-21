@@ -1,5 +1,5 @@
-Bindler -- Homebrew meets Bundler
-=================================
+Bindler: Homebrew meets Bundler
+===============================
 
 Homebrew rock, but managing system level dependencies can become a pain to track across multiple machines. Bundler was invented to make explicit declaration of Ruby dependencies consistent and painless. Bindler aims to do the same for system binaries by alleviating such issues as:
 - "What did I `brew install` to make my vim plugins work?"
@@ -29,7 +29,12 @@ Usage
 
 TODO: Write usage instructions here
 
-## Contributing
+What's up with the name?
+------------------------
+Bindler manages system binaries. Got it, right?
+
+Contributing
+------------
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
