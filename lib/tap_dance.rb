@@ -13,9 +13,14 @@ module TapDance
 
   class << self
     attr_writer :ui
+    attr_writer :prefix
 
     def ui
       @ui ||= UI.new
+    end
+
+    def prefix
+      @prefix ||= `brew --prefix`.chomp
     end
   end
 end

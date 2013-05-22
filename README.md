@@ -1,3 +1,7 @@
+[![Gem Version](https://badge.fury.io/rb/brewdler.png)](http://badge.fury.io/rb/tap_dance)
+[![Dependency Status](https://gemnasium.com/andrew/brewdler.png)](https://gemnasium.com/nybblr/tap_dance)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/nybblr/tap_dance)
+
 Tap Dance: Homebrew meets Bundler
 ===============================
 
