@@ -8,5 +8,37 @@ module TapDance
       @url  = url.to_s
       @opts = opts
     end
+
+    def entap
+      cmd_tap
+    end
+
+    def untap
+      cmd_untap
+    end
+
+    def tapped?
+      cmd_tab_list.each_line { |t|
+        return true if @url == t.chomp
+      }
+
+      return false
+    end
+
+  private
+
+    ### Easier to stub
+    def cmd_tap
+      `brew tap @{url} 2>&1`
+    end
+
+    def cmd_untap
+      `brew untap @{url} 2>&1`
+    end
+
+    def cmd_tab_list
+      `brew tap`
+    end
+
   end
 end

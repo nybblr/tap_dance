@@ -43,6 +43,9 @@ module TapDance
 
       unless File.exist? @brewfile
         TapDance.ui.error "Nothing to brew! No Brewfile found."
+      else
+        TapDance.ui.info "Running `brew update` for good measure."
+        cmd_update
       end
     end
 
@@ -62,6 +65,11 @@ module TapDance
     # Note: susceptible to code injection!
     def command?(name)
       system "which #{name.to_s} > /dev/null 2>&1"
+    end
+
+    ### Commands for stubbing
+    def cmd_update
+      `brew update 2>&1`
     end
   end
 end
