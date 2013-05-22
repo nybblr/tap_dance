@@ -1,7 +1,7 @@
-require 'bindler/brew'
-require 'bindler/tap'
+require 'tap_dance/brew'
+require 'tap_dance/tap'
 
-module Bindler
+module TapDance
   class Definition
     attr_accessor :taps
     attr_accessor :brews

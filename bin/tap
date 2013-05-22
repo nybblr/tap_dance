@@ -8,6 +8,6 @@ $:.unshift(lib) unless $:.include?(lib)
 require 'rubygems'
 require 'thor'
 
-require "bindler"
+require "tap_dance"
 
-Bindler::Bindle.start
+TapDance::Dance.start

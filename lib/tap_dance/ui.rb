@@ -1,6 +1,6 @@
 require 'rubygems/user_interaction'
 
-module Bindler
+module TapDance
   class UI
     def warn(message, newline = nil)
     end

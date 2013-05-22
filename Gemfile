@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in bindler.gemspec
+# Specify your gem's dependencies in tap_dance.gemspec
 gemspec

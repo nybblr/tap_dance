@@ -1,4 +1,4 @@
-module Bindler
+module TapDance
   class Brew
     def initialize(name, opts={})
       @name = name

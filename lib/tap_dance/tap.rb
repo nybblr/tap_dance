@@ -1,4 +1,4 @@
-module Bindler
+module TapDance
   class Tap
     def initialize(name, opts={})
       @name = name

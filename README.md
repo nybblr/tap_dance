@@ -1,7 +1,7 @@
-Bindler: Homebrew meets Bundler
+TapDance: Homebrew meets Bundler
 ===============================
 
-Homebrew rocks, but managing system level dependencies can become a pain to track across multiple machines. Bundler was designed to make explicit declaration of Ruby dependencies consistent and painless. Bindler aims to do the same for system binaries by alleviating such issues as:
+Homebrew rocks, but managing system level dependencies can become a pain to track across multiple machines. Bundler was designed to make explicit declaration of Ruby dependencies consistent and painless. TapDance aims to do the same for system binaries by alleviating such issues as:
 - "What did I `brew install` to make my vim plugins work?"
 - "With what extra arguments did I run my python installation?"
 - "Did I install that item in `brew list` for a reason I don't remember, or is it an automatically installed dependency?"
@@ -10,11 +10,11 @@ Homebrew rocks, but managing system level dependencies can become a pain to trac
 Installation
 ------------
 
-The "best" way to install bindler is by including it in your system-wide Gemfile (e.g. a Gemfile in your dotfiles).
+The "best" way to install tap_dance is by including it in your system-wide Gemfile (e.g. a Gemfile in your dotfiles).
 
 Add this line to your application's Gemfile:
 
-    gem 'bindler'
+    gem 'tap_dance'
 
 And then execute:
 
@@ -22,7 +22,7 @@ And then execute:
 
 If you don't version-control your dots, install it yourself as:
 
-    $ gem install bindler
+    $ gem install tap_dance
 
 Usage
 -----
@@ -32,7 +32,7 @@ TODO: Write usage instructions here
 What's up with the name?
 ------------------------
 
-Bindler manages system binaries. Got it, right?
+TapDance manages system binaries. Got it, right?
 
 Features
 --------

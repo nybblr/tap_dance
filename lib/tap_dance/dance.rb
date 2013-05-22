@@ -1,12 +1,12 @@
-require 'bindler/brew'
-require 'bindler/tap'
-require 'bindler/dsl'
+require 'tap_dance/brew'
+require 'tap_dance/tap'
+require 'tap_dance/dsl'
 
 require 'thor'
 
-module Bindler
+module TapDance
   class Bindle < Thor
-    package_name "Bindler"
+    package_name "TapDance"
     default_task "install"
 
     class_option "verbose",
@@ -36,20 +36,20 @@ module Bindler
       @brewfile ||= "./Brewfile"
       @brewfile = File.expand_path @brewfile
 
-      Bindler.ui = UI::Shell.new(options)
-      Bindler.ui.level = "debug" if options["verbose"]
+      TapDance.ui = UI::Shell.new(options)
+      TapDance.ui.level = "debug" if options["verbose"]
 
-      Bindler.ui.info "Brewing from #{@brewfile}"
+      TapDance.ui.info "Brewing from #{@brewfile}"
 
       unless File.exist? @brewfile
-        Bindler.ui.error "Nothing to brew! No Brewfile found."
+        TapDance.ui.error "Nothing to brew! No Brewfile found."
       end
     end
 
     desc "install", "install all the brews in your Brewfile"
     def install
       return unless File.exist? @brewfile
-      @definition = Bindler::Dsl.evaluate @brewfile
+      @definition = TapDance::Dsl.evaluate @brewfile
     end
 
     desc "update", "update all the brews in your Brewfile"

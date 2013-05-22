@@ -1,10 +1,10 @@
-require 'bindler/definition'
-require 'bindler/brew'
-require 'bindler/tap'
-require 'bindler/ui'
+require 'tap_dance/definition'
+require 'tap_dance/brew'
+require 'tap_dance/tap'
+require 'tap_dance/ui'
 
 class BrewfileError < RuntimeError; end
-module Bindler
+module TapDance
   class Dsl
     def self.evaluate(brewfile, lockfile=nil, unlock=nil)
       builder = new
@@ -29,9 +29,9 @@ module Bindler
       raise BrewfileError, ["Brewfile syntax error:", *bt].join("\n")
     rescue ScriptError, RegexpError, NameError, ArgumentError => e
       e.backtrace[0] = "#{e.backtrace[0]}: #{e.message} (#{e.class})"
-      Bindler.ui.warn e.backtrace.join("\n       ")
+      TapDance.ui.warn e.backtrace.join("\n       ")
       raise BrewfileError, "There was an error in your Brewfile," \
-        " and Bindler cannot continue."
+        " and TapDance cannot continue."
     end
 
     ### DSL commands
