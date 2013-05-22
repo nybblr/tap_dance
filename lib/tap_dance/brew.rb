@@ -6,9 +6,21 @@ module TapDance
     attr_accessor :tap
 
     def initialize(name, opts={})
+      @opts = opts.dup
       @name = name.to_s
-      @tap  = opts[:tap].to_sym if opts[:tap]
-      @opts = opts
+      @tap  = @opts[:tap]
+
+      # Get actual tap object
+      unless @tap.nil?
+        case @tap
+        when String, Symbol
+          @tap = @opts[:definition].tap_named @tap.to_s
+        when TapDance::Tap
+          # Good to go!
+        end
+        @opts[:tap] = @tap
+      end
+
     end
 
     def install

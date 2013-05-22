@@ -1,4 +1,5 @@
 require 'tap_dance/brew'
+require 'tap_dance/tap'
 
 describe TapDance::Brew do
   it "should let me create a brew without options" do
@@ -7,9 +8,10 @@ describe TapDance::Brew do
   end
 
   it "should let me create a brew with options" do
-    brew = TapDance::Brew.new(:git, :tap => :dev)
+    tap  = TapDance::Tap.new(:dev, "nybblr/dev")
+    brew = TapDance::Brew.new(:git, :tap => tap)
     brew.should_not be_nil
-    brew.tap.should eql(:dev)
+    brew.tap.should eql(tap)
   end
 
   it "should say git is a brewable formula" do

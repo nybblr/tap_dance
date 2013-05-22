@@ -13,8 +13,6 @@ module TapDance
     end
 
     def initialize
-      @taps   = [] # All the taps found so far
-      @brews  = [] # All the brews defined
       @groups = [] # Arg/filter groups
       @tap   = nil # Current tap scope
 
@@ -35,14 +33,22 @@ module TapDance
     end
 
     ### DSL commands
-    def tap(name, opts={})
+    def tap(name, url, opts={})
+      # Can't nest taps; doesn't make sense
+      raise BrewfileError, "You cannot nest taps!" unless @tap.nil?
+      old_tap = @tap
+
       puts "Tapped \"#{name}\""
-      @definition.tap name, opts
+      @tap = @definition.tap name, url, opts
+
+      yield if block_given?
+
+      @tap = old_tap
     end
 
     def brew(name, opts={})
       puts "Brewed \"#{name}\""
-      @definition.brew name, opts
+      @definition.brew name, opts.merge(:tap => @tap)
     end
 
   end
