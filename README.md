@@ -10,7 +10,7 @@ Homebrew rocks, but managing system level dependencies can become a pain to trac
 Installation
 ------------
 
-The "best" way to install tap_dance is by including it in your system-wide Gemfile (e.g. a Gemfile in your dotfiles).
+The "best" way to install tap dance is by including it in your system-wide Gemfile (e.g. a Gemfile in your dotfiles).
 
 Add this line to your application's Gemfile:
 
@@ -32,7 +32,7 @@ TODO: Write usage instructions here
 What's up with the name?
 ------------------------
 
-TapDance manages system binaries. Got it, right?
+Because declaring system and project deps with an awesome ruby gem makes me want to dance. Although I actually prefer swing and waltz.
 
 Features
 --------
