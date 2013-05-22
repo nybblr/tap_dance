@@ -1,14 +1,24 @@
+bindle = "./bin/bindle"
+
 describe "bindle" do
   it "should output basic usage info" do
-    system("./bin/bindle").should be_true
-    puts `echo $PWD`
+    system(bindle).should be_true
   end
 
   it "should have an install task" do
-    system("./bin/bindle install").should be_true
+    system("#{bindle} install").should be_true
   end
 
   it "should have an update task" do
-    system("./bin/bindle update").should be_true
+    system("#{bindle} update").should be_true
+  end
+
+  it "should use the default Brewfile without args" do
+    `#{bindle}`.should include(File.join File.expand_path(Dir.pwd), "Brewfile")
+  end
+
+  it "should use the given Brewfile" do
+    brewfile = "lib/bindler/Brewfile"
+    `#{bindle} -B #{brewfile}`.should include(File.join File.expand_path(Dir.pwd), brewfile)
   end
 end
