@@ -5,7 +5,7 @@ require 'tap_dance/dsl'
 require 'thor'
 
 module TapDance
-  class Bindle < Thor
+  class Dance < Thor
     package_name "TapDance"
     default_task "install"
 
