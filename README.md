@@ -1,7 +1,7 @@
-TapDance: Homebrew meets Bundler
+Tap Dance: Homebrew meets Bundler
 ===============================
 
-Homebrew rocks, but managing system level dependencies can become a pain to track across multiple machines. Bundler was designed to make explicit declaration of Ruby dependencies consistent and painless. TapDance aims to do the same for system binaries by alleviating such issues as:
+Homebrew rocks, but managing system level dependencies can become a pain to track across multiple machines. Bundler was designed to make explicit declaration of Ruby dependencies consistent and painless. Tap Dance aims to do the same for system binaries by alleviating such issues as:
 - "What did I `brew install` to make my vim plugins work?"
 - "With what extra arguments did I run my python installation?"
 - "Did I install that item in `brew list` for a reason I don't remember, or is it an automatically installed dependency?"
