@@ -31,10 +31,12 @@ TODO: Write usage instructions here
 
 What's up with the name?
 ------------------------
+
 Bindler manages system binaries. Got it, right?
 
 Features
 --------
+
 Limit by:
 - matching computer name
 - environment variable
@@ -42,6 +44,11 @@ Limit by:
 - if installed
 
 Groups
+
+Credit where due!
+-----------------
+
+Huge thanks to Yehuda Katz for his awesome work on Bundler. I shamelessly stole a lot of the feature ideas and Gemfile evaluation magic from it. Oh, and obviously since the gem is built around Homebrew, a big thanks to Max and the community around brew: it has redefined my machine setup workflow.
 
 Contributing
 ------------
