@@ -1,3 +1,3 @@
-puts "I CAN HAZ CHEEZE!"
+tap "nybblr/dev"
 
-hello
+brew "sack"

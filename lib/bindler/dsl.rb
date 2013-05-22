@@ -9,7 +9,7 @@ module Bindler
     def self.evaluate(brewfile, lockfile=nil, unlock=nil)
       builder = new
       builder.eval_brewfile(brewfile)
-      builder.to_definition(lockfile, unlock)
+      return @definition
     end
 
     def initialize
@@ -17,6 +17,8 @@ module Bindler
       @brews  = [] # All the brews defined
       @groups = [] # Arg/filter groups
       @tap   = nil # Current tap scope
+
+      @definition = Definition.new
     end
 
     def eval_brewfile(brewfile, contents = nil)
@@ -32,12 +34,15 @@ module Bindler
         " and Bindler cannot continue."
     end
 
-    def to_definition(lockfile, unlock)
-      return Definition.new(@taps, @brews)
+    ### DSL commands
+    def tap(name, opts={})
+      puts "Tapped \"#{name}\""
+      @definition.tap name, opts
     end
 
-    def hello
-      puts "HELLO WORLD!!!!!!!"
+    def brew(name, opts={})
+      puts "Brewed \"#{name}\""
+      @definition.brew name, opts
     end
 
   end
