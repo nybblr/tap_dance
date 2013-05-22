@@ -1,5 +1,6 @@
 require 'bindler/brew'
 require 'bindler/tap'
+require 'bindler/dsl'
 
 require 'thor'
 
@@ -17,14 +18,12 @@ module Bindler
       :banner => "Specify an alternate path to a Brewfile",
       :aliases => "-B"
 
-    attr_accessor :brews
-    attr_accessor :taps
     attr_accessor :brewfile
+    attr_accessor :definition
 
     def initialize(*args, &block)
       super(*args, &block)
-      @brews = []
-      @taps = []
+      @definition = nil
 
       # Make sure homebrew is installed
       unless command?(:brew)
@@ -36,16 +35,26 @@ module Bindler
       @brewfile = options["brewfile"]
       @brewfile ||= "./Brewfile"
       @brewfile = File.expand_path @brewfile
+
+      Bindler.ui = UI::Shell.new(options)
+      Bindler.ui.level = "debug" if options["verbose"]
+
+      Bindler.ui.info "Brewing from #{@brewfile}"
+
+      unless File.exist? @brewfile
+        Bindler.ui.error "Nothing to brew! No Brewfile found."
+      end
     end
 
     desc "install", "install all the brews in your Brewfile"
     def install
-      puts "Brewing from #{@brewfile}"
+      return unless File.exist? @brewfile
+      @definition = Bindler::Dsl.evaluate @brewfile
     end
 
     desc "update", "update all the brews in your Brewfile"
     def update(name=nil)
-      return "goodbye world!"
+      return unless File.exist? @brewfile
     end
 
   private
