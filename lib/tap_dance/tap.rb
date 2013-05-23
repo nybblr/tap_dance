@@ -25,6 +25,10 @@ module TapDance
       return false
     end
 
+    def to_s
+      "#{@name}:#{@url}"
+    end
+
   private
 
     ### Easier to stub

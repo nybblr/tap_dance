@@ -62,6 +62,14 @@ module TapDance
       installed_versions.sort.last if installed?
     end
 
+    def to_s
+      if @tap
+        "#{@tap.url}/#{@name}"
+      else
+        name
+      end
+    end
+
   private
 
     ### These make it easier to test with stubbing

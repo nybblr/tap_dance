@@ -38,8 +38,8 @@ module TapDance
       raise BrewfileError, "You cannot nest taps!" unless @tap.nil?
       old_tap = @tap
 
-      puts "Tapped \"#{name}\""
       @tap = @definition.tap name, url, opts
+      puts "Tapped \"#{@tap}\""
 
       yield if block_given?
 
@@ -47,8 +47,8 @@ module TapDance
     end
 
     def brew(name, opts={})
-      puts "Brewed \"#{name}\""
-      @definition.brew name, opts.merge(:tap => @tap)
+      brew = @definition.brew name, opts.merge(:tap => @tap)
+      puts "Brewed \"#{brew}\""
     end
 
   end
