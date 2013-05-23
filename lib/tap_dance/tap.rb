@@ -18,7 +18,7 @@ module TapDance
     end
 
     def tapped?
-      cmd_tab_list.each_line { |t|
+      cmd_tap_list.each_line { |t|
         return true if @url == t.chomp
       }
 
@@ -40,7 +40,7 @@ module TapDance
       `brew untap @{url} 2>&1`
     end
 
-    def cmd_tab_list
+    def cmd_tap_list
       `brew tap`
     end
 

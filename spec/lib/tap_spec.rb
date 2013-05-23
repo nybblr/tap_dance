@@ -16,7 +16,7 @@ samueljohn/python
 
   it "should say it isn't tapped if it isn't" do
     tap = TapDance::Tap.new(:dev, "nybblr/dev")
-    tap.stub :cmd_tap_list => <<-eos
+    tap.stub :cmd_tab_list => <<-eos
 homebrew/dupes
 homebrew/science
     eos
