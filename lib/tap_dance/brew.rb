@@ -1,4 +1,5 @@
 require 'tap_dance/ui'
+require 'tap_dance/brew_cli'
 
 module TapDance
   class Brew
@@ -9,6 +10,7 @@ module TapDance
       @opts = opts.dup
       @name = name.to_s
       @tap  = @opts[:tap]
+      @args = @opts[:args] | []
 
       # Get actual tap object
       unless @tap.nil?
@@ -27,23 +29,31 @@ module TapDance
       if brewable?
         # Do magic here
       else
-        TapDance.ui.error "No available formula for #{@name}"
+        TapDance.ui.error "No available formula for \"#{@name}\""
+      end
+    end
+
+    def upgrade
+      if installed?
+        # Do magic here
+      else
+        TapDance.ui.error "You haven't installed \"#{@name}\""
       end
     end
 
     # Does the formula exist?
     def brewable?
-      cmd_formula_info[0..4] != 'Error'
+      BrewCli.formula_info(@name)[0..4] != 'Error'
     end
 
     def formula_version
       return nil unless brewable?
-      cmd_formula_info.split($/).first.match(/#{name}: stable ([^\s,]+)/)[1]
+      BrewCli.formula_info(@name).split($/).first.match(/#{name}: stable ([^\s,]+)/)[1]
     end
 
     def installed_versions
       # Would love to use StringScanner...but we don't need to!
-      versions = cmd_list_versions.chomp.split(/\s+/)
+      versions = BrewCli.list_versions(@name).chomp.split(/\s+/)
       unless versions.empty?
         return versions[1..-1]
       else
@@ -68,17 +78,6 @@ module TapDance
       else
         name
       end
-    end
-
-  private
-
-    ### These make it easier to test with stubbing
-    def cmd_list_versions
-      `brew list --versions #{@name}`
-    end
-
-    def cmd_formula_info
-      `brew info #{@name} 2>&1`
     end
 
   end

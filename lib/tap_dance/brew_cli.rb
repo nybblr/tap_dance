@@ -8,20 +8,24 @@ module TapDance
         @prefix ||= `brew --prefix`.chomp
       end
 
-      def list_versions
-        `brew list --versions #{@name}`
+      def update
+        `brew update 2>&1`
       end
 
-      def formula_info
-        `brew info #{@name} 2>&1`
+      def list_versions(name)
+        `brew list --versions #{name}`
       end
 
-      def tap
-        `brew tap @{url} 2>&1`
+      def formula_info(name)
+        `brew info #{name} 2>&1`
       end
 
-      def untap
-        `brew untap @{url} 2>&1`
+      def tap(url)
+        `brew tap #{url} 2>&1`
+      end
+
+      def untap(url)
+        `brew untap #{url} 2>&1`
       end
 
       def tap_list

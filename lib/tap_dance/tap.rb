@@ -1,3 +1,6 @@
+require 'tap_dance/ui'
+require 'tap_dance/brew_cli'
+
 module TapDance
   class Tap
     attr_accessor :name
@@ -10,15 +13,15 @@ module TapDance
     end
 
     def entap
-      cmd_tap
+      BrewCli.tap(@url)
     end
 
     def untap
-      cmd_untap
+      BrewCli.untap(@url)
     end
 
     def tapped?
-      cmd_tap_list.each_line { |t|
+      BrewCli.tap_list.each_line { |t|
         return true if @url == t.chomp
       }
 
@@ -27,21 +30,6 @@ module TapDance
 
     def to_s
       "#{@name}:#{@url}"
-    end
-
-  private
-
-    ### Easier to stub
-    def cmd_tap
-      `brew tap @{url} 2>&1`
-    end
-
-    def cmd_untap
-      `brew untap @{url} 2>&1`
-    end
-
-    def cmd_tap_list
-      `brew tap`
     end
 
   end

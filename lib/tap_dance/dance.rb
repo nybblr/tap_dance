@@ -45,7 +45,7 @@ module TapDance
         TapDance.ui.error "Nothing to brew! No Brewfile found."
       else
         TapDance.ui.info "Running `brew update` for good measure."
-        cmd_update
+        BrewCli.update
       end
     end
 
@@ -67,9 +67,5 @@ module TapDance
       system "which #{name.to_s} > /dev/null 2>&1"
     end
 
-    ### Commands for stubbing
-    def cmd_update
-      `brew update 2>&1`
-    end
   end
 end
