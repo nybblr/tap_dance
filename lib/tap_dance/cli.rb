@@ -1,3 +1,4 @@
+require 'tap_dance'
 require 'tap_dance/brew'
 require 'tap_dance/tap'
 require 'tap_dance/dsl'
@@ -5,7 +6,7 @@ require 'tap_dance/dsl'
 require 'thor'
 
 module TapDance
-  class Dance < Thor
+  class CLI < Thor
     package_name "TapDance"
     default_task "install"
 
@@ -45,7 +46,7 @@ module TapDance
         TapDance.ui.error "Nothing to brew! No Brewfile found."
       else
         TapDance.ui.info "Running `brew update` for good measure."
-        BrewCli.update
+        BrewCLI.update
       end
     end
 

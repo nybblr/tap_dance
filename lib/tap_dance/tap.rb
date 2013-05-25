@@ -13,15 +13,15 @@ module TapDance
     end
 
     def entap
-      BrewCli.tap(@url)
+      BrewCLI.tap(@url)
     end
 
     def untap
-      BrewCli.untap(@url)
+      BrewCLI.untap(@url)
     end
 
     def tapped?
-      BrewCli.tap_list.each_line { |t|
+      BrewCLI.tap_list.each_line { |t|
         return true if @url == t.chomp
       }
 

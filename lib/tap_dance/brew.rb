@@ -7,10 +7,10 @@ module TapDance
     attr_accessor :tap
 
     def initialize(name, opts={})
-      @opts = opts.dup
-      @name = name.to_s
-      @tap  = @opts[:tap]
-      @args = @opts[:args] | []
+      @opts  = opts.dup
+      @name  = name.to_s
+      @tap   = @opts[:tap]
+      @flags = @opts[:flags] | []
 
       # Get actual tap object
       unless @tap.nil?
@@ -43,17 +43,17 @@ module TapDance
 
     # Does the formula exist?
     def brewable?
-      BrewCli.formula_info(@name)[0..4] != 'Error'
+      BrewCLI.formula_info(@name)[0..4] != 'Error'
     end
 
     def formula_version
       return nil unless brewable?
-      BrewCli.formula_info(@name).split($/).first.match(/#{name}: stable ([^\s,]+)/)[1]
+      BrewCLI.formula_info(@name).split($/).first.match(/#{name}: stable ([^\s,]+)/)[1]
     end
 
     def installed_versions
       # Would love to use StringScanner...but we don't need to!
-      versions = BrewCli.list_versions(@name).chomp.split(/\s+/)
+      versions = BrewCLI.list_versions(@name).chomp.split(/\s+/)
       unless versions.empty?
         return versions[1..-1]
       else

@@ -10,4 +10,4 @@ require 'thor'
 
 require "tap_dance"
 
-TapDance::Dance.start
+TapDance::CLI.start

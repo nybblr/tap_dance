@@ -1,5 +1,5 @@
 require 'tap_dance/version'
-require 'tap_dance/dance'
+require 'tap_dance/cli'
 require 'tap_dance/ui'
 
 module TapDance
@@ -8,7 +8,7 @@ module TapDance
   end
 
   def self.method_missing(method, *args, &block)
-    TapDance::Dance.new.send(method, *args, &block)
+    TapDance::CLI.new.send(method, *args, &block)
   end
 
   class << self

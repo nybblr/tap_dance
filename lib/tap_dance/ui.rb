@@ -2,6 +2,8 @@ require 'rubygems/user_interaction'
 
 module TapDance
   class UI
+    attr_reader :log
+
     def warn(message, newline = nil)
     end
 
@@ -105,9 +107,17 @@ module TapDance
         msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
         if newline.nil?
           @shell.say(msg, color)
+          logger(msg)
         else
           @shell.say(msg, color, newline)
+          logger(msg, newline)
         end
+      end
+
+      def logger(message, newline=(message.to_s !~ /( |\t)$/))
+        @log ||= ""
+        @log << message
+        @log << $/ if newline
       end
 
       def word_wrap(text, line_width = @shell.terminal_width)
@@ -117,17 +127,15 @@ module TapDance
       end
     end
 
-    class RGProxy < ::Gem::SilentUI
-      def initialize(ui)
-        @ui = ui
-        super()
-      end
+    class Logger < Shell
 
-      def say(message)
-        if message =~ /native extensions/
-          @ui.info "with native extensions "
+    private
+
+      def tell_me(msg, color = nil, newline = nil)
+        if newline.nil?
+          logger(msg)
         else
-          @ui.debug(message)
+          logger(msg, newline)
         end
       end
     end
