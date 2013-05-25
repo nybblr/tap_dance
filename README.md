@@ -16,7 +16,7 @@ Installation
 
 The "best" way to install tap dance is by including it in your system-wide Gemfile (e.g. a Gemfile in your dotfiles).
 
-Add this line to your application's Gemfile:
+Add this line to your Gemfile:
 
     gem 'tap_dance'
 
@@ -24,7 +24,7 @@ And then execute:
 
     $ bundle
 
-If you don't version-control your dots, install it yourself as:
+If you don't version-control your dots (which you should), install it yourself as:
 
     $ gem install tap_dance
 
@@ -56,6 +56,12 @@ Huge thanks to Yehuda Katz for his awesome work on Bundler. I shamelessly stole 
 
 Contributing
 ------------
+
+I love contributions: give me a hand by including an in-depth description of the problem fixed or feature implemented, with usage information if applicable.
+
+Most importantly, please include tests: if the request fixes a bug, include one or more failing tests which cover the issue. For new features, try to cover the basic functionalities, making sure the tests can pass on any properly configured OSX workstation.
+
+**Steps to Contribution Awesomeness:**
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
