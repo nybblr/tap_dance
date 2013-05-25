@@ -61,10 +61,12 @@ I love contributions: give me a hand by including an in-depth description of the
 
 Most importantly, please include tests: if the request fixes a bug, include one or more failing tests which cover the issue. For new features, try to cover the basic functionalities, making sure the tests can pass on any properly configured OSX workstation.
 
-**Steps to Contribution Awesomeness:**
+**Steps to contribution awesomeness:**
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+Although you could just make your commits on the master branch, it's easier to inspect merge histories with actual feature branches. It also makes the bounds of your contribution obvious. Did I mention it looks better in `git log --oneline --graph`
