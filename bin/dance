@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 
-# Add lib directory to load path
+# Add lib, ext to load path
 root = File.expand_path '../..', __FILE__
-lib  = File.join root, 'lib'
-$:.unshift(lib) unless $:.include?(lib)
+[:lib, :ext].each do |dir|
+  path = File.join root, dir.to_s
+  $:.unshift(path) unless $:.include?(path)
+end
 
 require 'rubygems'
 require 'thor'

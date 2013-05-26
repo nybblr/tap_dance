@@ -18,6 +18,9 @@ module TapDance
       :type => :string,
       :banner => "Specify an alternate path to a Brewfile",
       :aliases => "-B"
+    class_option "dry-run",
+      :type => :boolean,
+      :banner => "Print out what volatile commands would be run"
 
     attr_accessor :brewfile
     attr_accessor :definition
@@ -32,6 +35,9 @@ module TapDance
       end
 
       @definition = nil
+
+      # Activate dry-run mode
+      TapDance::BrewCLI.dry_run = options["dry-run"] if options["dry-run"]
 
       # Find brewfile
       @brewfile = options["brewfile"]
