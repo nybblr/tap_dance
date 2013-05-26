@@ -28,9 +28,13 @@ module TapDance
     def initialize(*args, &block)
       super(*args, &block)
 
+      # Activate shell output
+      TapDance.ui = UI::Shell.new(options)
+      TapDance.ui.level = "debug" if options["verbose"]
+
       # Make sure homebrew is installed
       unless command?(:brew)
-        puts "You haven't installed homebrew, or it isn't in your path."
+        TapDance.ui.error "You haven't installed homebrew, or it isn't in your path."
         exit 1
       end
 
@@ -43,9 +47,6 @@ module TapDance
       @brewfile = options["brewfile"]
       @brewfile ||= "./Brewfile"
       @brewfile = File.expand_path @brewfile
-
-      TapDance.ui = UI::Shell.new(options)
-      TapDance.ui.level = "debug" if options["verbose"]
 
       TapDance.ui.info "Brewing from #{@brewfile}"
 
