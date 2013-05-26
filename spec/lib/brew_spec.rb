@@ -63,7 +63,7 @@ describe TapDance::Brew do
 
     version = brew.formula_version
     version.should_not be_nil
-    version.chomp.should_not eql("")
+    version.strip.should_not eql("")
   end
 
   it "should get the correct formula version when it exists" do

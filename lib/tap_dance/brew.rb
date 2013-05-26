@@ -10,7 +10,8 @@ module TapDance
       @opts  = opts.dup
       @name  = name.to_s
       @tap   = @opts[:tap]
-      @flags = @opts[:flags] | []
+      @flags = @opts[:flags]
+      @flags ||= []
 
       # Get actual tap object
       unless @tap.nil?
@@ -28,32 +29,42 @@ module TapDance
     def install
       if brewable?
         # Do magic here
+        BrewCLI.install canonical, @flags
       else
-        TapDance.ui.error "No available formula for \"#{@name}\""
+        TapDance.ui.error "No available formula for \"#{canonical}\""
       end
     end
 
     def upgrade
       if installed?
         # Do magic here
+        BrewCLI.upgrade canonical, @flags
       else
-        TapDance.ui.error "You haven't installed \"#{@name}\""
+        TapDance.ui.error "You haven't installed \"#{canonical}\""
+      end
+    end
+
+    def canonical
+      unless @tap.nil?
+        "#{@tap.url}/#{@name}"
+      else
+        @name
       end
     end
 
     # Does the formula exist?
     def brewable?
-      BrewCLI.formula_info(@name)[0..4] != 'Error'
+      BrewCLI.formula_info(canonical)[0..4] != 'Error'
     end
 
     def formula_version
       return nil unless brewable?
-      BrewCLI.formula_info(@name).split($/).first.match(/#{name}: stable ([^\s,]+)/)[1]
+      BrewCLI.formula_info(canonical).split($/).first.match(/#{name}: stable ([^\s,]+)/)[1]
     end
 
     def installed_versions
       # Would love to use StringScanner...but we don't need to!
-      versions = BrewCLI.list_versions(@name).chomp.split(/\s+/)
+      versions = BrewCLI.list_versions(canonical).strip.split(/\s+/)
       unless versions.empty?
         return versions[1..-1]
       else
@@ -73,11 +84,7 @@ module TapDance
     end
 
     def to_s
-      if @tap
-        "#{@tap.url}/#{@name}"
-      else
-        name
-      end
+      return canonical
     end
 
   end

@@ -5,11 +5,13 @@ require 'tap_dance/ui'
 
 class BrewfileError < RuntimeError; end
 module TapDance
-  class Dsl
+  class DSL
+    attr_reader :definition
+
     def self.evaluate(brewfile, lockfile=nil, unlock=nil)
       builder = new
       builder.eval_brewfile(brewfile)
-      return @definition
+      builder.definition
     end
 
     def initialize
@@ -39,7 +41,6 @@ module TapDance
       old_tap = @tap
 
       @tap = @definition.tap name, url, opts
-      puts "Tapped \"#{@tap}\""
 
       yield if block_given?
 
@@ -47,8 +48,7 @@ module TapDance
     end
 
     def brew(name, opts={})
-      brew = @definition.brew name, opts.merge(:tap => @tap)
-      puts "Brewed \"#{brew}\""
+      @definition.brew name, opts.merge(:tap => @tap)
     end
 
   end

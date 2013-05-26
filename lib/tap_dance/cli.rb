@@ -24,13 +24,14 @@ module TapDance
 
     def initialize(*args, &block)
       super(*args, &block)
-      @definition = nil
 
       # Make sure homebrew is installed
       unless command?(:brew)
         puts "You haven't installed homebrew, or it isn't in your path."
         exit 1
       end
+
+      @definition = nil
 
       # Find brewfile
       @brewfile = options["brewfile"]
@@ -53,12 +54,15 @@ module TapDance
     desc "install", "install all the brews in your Brewfile"
     def install
       return unless File.exist? @brewfile
-      @definition = TapDance::Dsl.evaluate @brewfile
+      @definition = TapDance::DSL.evaluate @brewfile
+      @definition.execute
     end
 
     desc "update", "update all the brews in your Brewfile"
     def update(name=nil)
       return unless File.exist? @brewfile
+      @definition = TapDance::DSL.evaluate @brewfile
+      @definition.execute true
     end
 
   private

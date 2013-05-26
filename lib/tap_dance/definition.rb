@@ -24,5 +24,14 @@ module TapDance
     def tap_named(name)
       @taps.find { |t| t.name.to_s == name.to_s }
     end
+
+    def execute(upgrade=false)
+      @taps.each(&:entap)
+      unless upgrade
+        @brews.each(&:install)
+      else
+        @brews.each(&:upgrade)
+      end
+    end
   end
 end

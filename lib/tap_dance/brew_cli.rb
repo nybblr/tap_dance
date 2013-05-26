@@ -1,5 +1,9 @@
 require 'tap_dance'
 
+# Load in extensions
+require 'hash'
+require 'array'
+
 module TapDance
   module BrewCLI
     class << self
@@ -8,7 +12,7 @@ module TapDance
       attr_writer :prefix
 
       def prefix
-        @prefix ||= exec("--prefix").chomp
+        @prefix ||= exec("--prefix").strip
       end
 
       def update
@@ -16,7 +20,11 @@ module TapDance
       end
 
       def install(name, flags="")
-        exec "install #{name} #{flags}", true
+        exec "install #{name} #{flag_string flags}", true
+      end
+
+      def upgrade(name, flags="")
+        exec "upgrade #{name} #{flag_string flags}", true
       end
 
       def list_versions(name)
@@ -48,6 +56,7 @@ module TapDance
         # If a command is volatile (causes system changes),
         # we want to offer a dry-run option for testing
         # and the CLI.
+        cmd.strip!
 
         if volatile and @dry_run
           TapDance.ui.warn "Would run: brew #{cmd}"
@@ -57,6 +66,29 @@ module TapDance
         end
       end
 
+      # Sanitize flags with standard unix
+      # conventions and generate a string
+      def flag_string(flags)
+        case flags
+        when String
+          return flags
+        else
+          return flags.squash("-").map {|m|
+            case m
+            when /^--/
+              m
+            when /^-[^\-]/
+              m
+            else
+              if m =~ /^.[ =]/
+                "-#{m}"
+              else
+                "--#{m}"
+              end
+            end
+          }.join(" ")
+        end
+      end
     end
   end
 end

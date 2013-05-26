@@ -3,4 +3,5 @@ tap :dart, "dartsim/dart" do
   brew "dartsim"
 end
 
-brew "sack"
+brew "sack", :tap => :dev
+brew "vim", :flags => { :with => [:ruby, :perl, :python] }
