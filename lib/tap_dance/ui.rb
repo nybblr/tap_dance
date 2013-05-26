@@ -22,6 +22,9 @@ module TapDance
     def confirm(message, newline = nil)
     end
 
+    def detail(message, newline = nil)
+    end
+
     def debug?
       false
     end
@@ -30,7 +33,7 @@ module TapDance
     end
 
     class Shell < UI
-      LEVELS = %w(silent error warn confirm info debug)
+      LEVELS = %w(silent error warn detail confirm info debug)
 
       attr_writer :shell
 
@@ -48,6 +51,10 @@ module TapDance
 
       def confirm(msg, newline = nil)
         tell_me(msg, :green, newline) if level("confirm")
+      end
+
+      def detail(msg, newline = nil)
+        tell_me(msg, :cyan, newline) if level("detail")
       end
 
       def warn(msg, newline = nil)
@@ -115,6 +122,7 @@ module TapDance
       end
 
       def logger(message, newline=(message.to_s !~ /( |\t)$/))
+        return if message.nil?
         @log ||= ""
         @log << message
         @log << $/ if newline

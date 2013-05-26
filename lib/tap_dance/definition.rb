@@ -1,5 +1,7 @@
 require 'tap_dance/brew'
 require 'tap_dance/tap'
+require 'tap_dance/ui'
+require 'tap_dance'
 
 module TapDance
   class Definition
@@ -26,11 +28,19 @@ module TapDance
     end
 
     def execute(upgrade=false)
-      @taps.each(&:entap)
-      unless upgrade
-        @brews.each(&:install)
-      else
-        @brews.each(&:upgrade)
+      for tap in @taps do
+        TapDance.ui.confirm "Tapping \"#{tap}\""
+        tap.entap
+      end
+
+      for brew in @brews do
+        unless upgrade
+          TapDance.ui.confirm "Installing \"#{brew}\""
+          TapDance.ui.detail brew.install
+        else
+          TapDance.ui.confirm "Upgrading \"#{brew}\""
+          TapDance.ui.detail brew.upgrade
+        end
       end
     end
   end

@@ -67,8 +67,7 @@ describe TapDance::Brew do
   end
 
   it "should get the correct formula version when it exists" do
-    brew = TapDance::Brew.new(:git)
-    TapDance::BrewCLI.stub :formula_version => <<-eos
+    TapDance::BrewCLI.stub :formula_info => <<-eos
 git: stable 1.8.2.3, HEAD
 http://git-scm.com
 /usr/local/Cellar/git/1.8.2.1 (1289 files, 27M)
@@ -101,6 +100,7 @@ zsh completion has been installed to:
   /usr/local/share/zsh/site-functions"
     eos
 
+    brew = TapDance::Brew.new(:git)
     brew.formula_version.should eql("1.8.2.3")
   end
 
