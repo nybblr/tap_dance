@@ -48,7 +48,7 @@ module TapDance
     end
 
     def brew(name, opts={})
-      @definition.brew name, opts.merge(:tap => @tap)
+      @definition.brew name, { :tap => @tap }.merge(opts)
     end
 
   end
