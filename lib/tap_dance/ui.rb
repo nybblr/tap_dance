@@ -111,6 +111,7 @@ module TapDance
 
       # valimism
       def tell_me(msg, color = nil, newline = nil)
+        return if (msg.nil? || msg == "") && newline.nil?
         msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
         if newline.nil?
           @shell.say(msg, color)
@@ -122,7 +123,6 @@ module TapDance
       end
 
       def logger(message, newline=(message.to_s !~ /( |\t)$/))
-        return if message.nil?
         @log ||= ""
         @log << message
         @log << $/ if newline

@@ -30,7 +30,7 @@ module TapDance
     def execute(upgrade=false)
       for tap in @taps do
         TapDance.ui.confirm "Tapping \"#{tap}\""
-        tap.entap
+        TapDance.ui.detail tap.entap
       end
 
       for brew in @brews do

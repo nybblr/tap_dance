@@ -62,7 +62,7 @@ module TapDance
           TapDance.ui.warn "Would run: brew #{cmd}"
           return nil
         else
-          return `brew #{cmd} 2>&1`
+          return `brew #{cmd} 2>&1`.chomp
         end
       end
 
