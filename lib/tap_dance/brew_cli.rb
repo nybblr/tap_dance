@@ -36,6 +36,10 @@ module TapDance
         exec "info #{name}"
       end
 
+      def formula_versions(name)
+        exec "versions #{name}"
+      end
+
       def tap(url)
         exec "tap #{url}", true
       end
@@ -63,7 +67,7 @@ module TapDance
           TapDance.ui.warn "Would run: brew #{cmd}"
           return nil
         else
-          Result.of "brew #{cmd} 2>&1"
+          Result.of "brew #{cmd}"
         end
       end
 

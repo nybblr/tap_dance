@@ -110,4 +110,24 @@ zsh completion has been installed to:
 
     brew.formula_version.should be_nil
   end
+
+  it "should be able to fetch all formula versions" do
+    TapDance::BrewCLI.stub :formula_versions => TapDance::BrewCLI::Result.new(<<-eos, "Error", 1)
+1.8.3    git checkout 34ce866 /usr/local/Library/Formula/git.rb
+1.8.2.3  git checkout e33b2f0 /usr/local/Library/Formula/git.rb
+1.8.2.2  git checkout 015cd6e /usr/local/Library/Formula/git.rb
+1.8.2.1  git checkout fef0e87 /usr/local/Library/Formula/git.rb
+1.8.2    git checkout 583272d /usr/local/Library/Formula/git.rb
+
+    eos
+
+    brew = TapDance::Brew.new(:git)
+    brew.formula_versions.should eql([
+      %w[1.8.3   34ce866 /usr/local/Library/Formula/git.rb],
+      %w[1.8.2.3 e33b2f0 /usr/local/Library/Formula/git.rb],
+      %w[1.8.2.2 015cd6e /usr/local/Library/Formula/git.rb],
+      %w[1.8.2.1 fef0e87 /usr/local/Library/Formula/git.rb],
+      %w[1.8.2   583272d /usr/local/Library/Formula/git.rb],
+    ])
+  end
 end

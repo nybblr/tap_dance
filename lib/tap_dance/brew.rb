@@ -67,7 +67,14 @@ module TapDance
     def formula_versions
       # Takes a long time to get; cache return
       if @formula_versions.nil?
-        BrewCLI.formula_versions(canonical)
+        @formula_versions = BrewCLI.formula_versions(canonical).
+          out.chomp.split($/).map do |v|
+          s = v.split(/\s+/)
+          version = s[0]
+          commit  = s[3]
+          path    = s[4]
+          [ version, commit, path ]
+        end
       else
         return @formula_versions
       end
