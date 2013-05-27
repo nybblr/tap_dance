@@ -54,17 +54,28 @@ module TapDance
 
     # Does the formula exist?
     def brewable?
-      BrewCLI.formula_info(canonical)[0..4] != 'Error'
+      BrewCLI.formula_info(canonical).okay?
     end
 
     def formula_version
-      return nil unless brewable?
-      BrewCLI.formula_info(canonical).split($/).first.match(/#{name}: stable ([^\s,]+)/)[1]
+      res = BrewCLI.formula_info(canonical)
+      return nil unless res.okay?
+
+      res.out.split($/).first.match(/#{name}: stable ([^\s,]+)/)[1]
+    end
+
+    def formula_versions
+      # Takes a long time to get; cache return
+      if @formula_versions.nil?
+        BrewCLI.formula_versions(canonical)
+      else
+        return @formula_versions
+      end
     end
 
     def installed_versions
       # Would love to use StringScanner...but we don't need to!
-      versions = BrewCLI.list_versions(canonical).strip.split(/\s+/)
+      versions = BrewCLI.list_versions(canonical).out.strip.split(/\s+/)
       unless versions.empty?
         return versions[1..-1]
       else

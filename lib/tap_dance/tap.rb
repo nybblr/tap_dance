@@ -21,7 +21,7 @@ module TapDance
     end
 
     def tapped?
-      BrewCLI.tap_list.each_line { |t|
+      BrewCLI.tap_list.out.each_line { |t|
         return true if @url == t.strip
       }
 

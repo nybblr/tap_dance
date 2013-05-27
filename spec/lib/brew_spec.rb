@@ -1,6 +1,7 @@
 require 'tap_dance/brew'
 require 'tap_dance/tap'
 require 'tap_dance/brew_cli'
+require 'tap_dance/brew_cli/result'
 
 describe TapDance::Brew do
   it "should let me create a brew without options" do
@@ -27,7 +28,7 @@ describe TapDance::Brew do
 
   it "should be able to parse out correct installed versions" do
     brew = TapDance::Brew.new(:git)
-    TapDance::BrewCLI.stub :list_versions => "git 1.8.2.1 1.8.2.2 2.0.0.alpha"
+    TapDance::BrewCLI.stub :list_versions => TapDance::BrewCLI::Result.new("git 1.8.2.1 1.8.2.2 2.0.0.alpha")
 
     brew.installed_versions.should eql(%w[1.8.2.1 1.8.2.2 2.0.0.alpha])
   end
@@ -40,7 +41,7 @@ describe TapDance::Brew do
 
   it "should return the latest if the brew is installed" do
     brew = TapDance::Brew.new(:asdfgh)
-    TapDance::BrewCLI.stub :list_versions => "git 1.8.2.1 1.8.2.2 2.0.0.alpha"
+    TapDance::BrewCLI.stub :list_versions => TapDance::BrewCLI::Result.new("git 1.8.2.1 1.8.2.2 2.0.0.alpha")
 
     brew.latest_version.should eql("2.0.0.alpha")
   end
@@ -53,7 +54,7 @@ describe TapDance::Brew do
 
   it "should say a brew is installed when it is" do
     brew = TapDance::Brew.new(:git)
-    TapDance::BrewCLI.stub :list_versions => "git 1.8.2.1 1.8.2.2 2.0.0.alpha"
+    TapDance::BrewCLI.stub :list_versions => TapDance::BrewCLI::Result.new("git 1.8.2.1 1.8.2.2 2.0.0.alpha")
 
     brew.installed?.should be_true
   end
@@ -67,7 +68,7 @@ describe TapDance::Brew do
   end
 
   it "should get the correct formula version when it exists" do
-    TapDance::BrewCLI.stub :formula_info => <<-eos
+    TapDance::BrewCLI.stub :formula_info => TapDance::BrewCLI::Result.new(<<-eos)
 git: stable 1.8.2.3, HEAD
 http://git-scm.com
 /usr/local/Cellar/git/1.8.2.1 (1289 files, 27M)
