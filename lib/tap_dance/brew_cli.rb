@@ -1,5 +1,5 @@
 require 'tap_dance'
-require 'tap_dance/brew_cli/result'
+require 'tap_dance/shell_result'
 
 # Load in extensions
 require 'hash'
@@ -67,7 +67,7 @@ module TapDance
           TapDance.ui.warn "Would run: brew #{cmd}"
           return nil
         else
-          Result.of "brew #{cmd}"
+          ShellResult.of "brew #{cmd}"
         end
       end
 
