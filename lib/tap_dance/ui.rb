@@ -109,16 +109,24 @@ module TapDance
 
     private
 
-      # valimism
       def tell_me(msg, color = nil, newline = nil)
         return if (msg.nil? || msg == "") && newline.nil?
         msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
-        if newline.nil?
-          @shell.say(msg, color)
-          logger(msg)
+        line = if newline.nil? then [] else [newline] end
+
+        if msg.is_a? ShellResult
+          unless msg.out.chomp == ""
+            @shell.say(msg.out.chomp, color, *line)
+            logger(msg.out.chomp, *line)
+          end
+
+          unless msg.err.chomp == ""
+            @shell.say(msg.err.chomp, :red)
+            logger(msg.err.chomp)
+          end
         else
-          @shell.say(msg, color, newline)
-          logger(msg, newline)
+          @shell.say(msg, color, *line)
+          logger(msg, *line)
         end
       end
 
