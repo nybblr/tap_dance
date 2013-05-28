@@ -47,8 +47,15 @@ module TapDance
       @tap = old_tap
     end
 
-    def brew(name, opts={})
-      @definition.brew name, { :tap => @tap }.merge(opts)
+    def brew(name, version=nil, opts=nil)
+      # Was version omitted?
+      if opts.nil? && version.is_a?(Hash)
+        opts = version
+        version = nil
+      end
+      opts ||= {}
+
+      @definition.brew name, version, { :tap => @tap }.merge(opts)
     end
 
   end

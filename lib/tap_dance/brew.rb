@@ -4,14 +4,15 @@ require 'tap_dance/brew_cli'
 module TapDance
   class Brew
     attr_accessor :name
+    attr_accessor :version
     attr_accessor :tap
 
-    def initialize(name, opts={})
-      @opts  = opts.dup
-      @name  = name.to_s
-      @tap   = @opts[:tap]
-      @flags = @opts[:flags]
-      @flags ||= []
+    def initialize(name, version=nil, opts={})
+      @opts    = opts.dup
+      @name    = name.to_s
+      @version = version
+      @tap     = @opts[:tap]
+      @flags   = @opts[:flags] || []
 
       # Get actual tap object
       unless @tap.nil?

@@ -13,13 +13,19 @@ module TapDance
       @brews = brews
     end
 
-    def tap(name, url, opts={})
-      @taps << Tap.new(name, url, opts.merge(:definition => self))
+    def tap(*args)
+      if args.last.is_a? Hash
+        args.last.merge!(:definition => self)
+      end
+      @taps << Tap.new(*args)
       @taps.last
     end
 
-    def brew(name, opts={})
-      @brews << Brew.new(name, opts.merge(:definition => self))
+    def brew(*args)
+      if args.last.is_a? Hash
+        args.last.merge!(:definition => self)
+      end
+      @brews << Brew.new(*args)
       @brews.last
     end
 

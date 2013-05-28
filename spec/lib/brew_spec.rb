@@ -11,7 +11,7 @@ describe TapDance::Brew do
 
   it "should let me create a brew with options" do
     tap  = TapDance::Tap.new(:dev, "nybblr/dev")
-    brew = TapDance::Brew.new(:git, :tap => tap)
+    brew = TapDance::Brew.new(:git, nil, :tap => tap)
     brew.should_not be_nil
     brew.tap.should eql(tap)
   end
