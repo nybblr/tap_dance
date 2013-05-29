@@ -7,9 +7,9 @@ root = File.expand_path '../..', __FILE__
   $:.unshift(path) unless $:.include?(path)
 end
 
+require "tap_dance/cli"
+
 require 'rubygems'
 require 'thor'
-
-require "tap_dance"
 
 TapDance::CLI.start
