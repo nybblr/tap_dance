@@ -1,4 +1,20 @@
-require 'open3'
+# require 'open3'
+### Patch open4 command for cross-Ruby joy
+## Only works on >= 1.9
+# out, err, sts = Open3.capture3 cmd
+#
+## popen3 doesn't return exit status
+#
+## Doesn't work on JRuby
+# pid, stdin, stdout, stderr = open4(cmd)
+if IO.respond_to?(:popen4)
+  def open4(*args)
+    IO.popen4(*args)
+  end
+else
+  require 'open4'
+  include Open4
+end
 
 module TapDance
   class ShellResult
@@ -7,7 +23,12 @@ module TapDance
     attr_reader :status
 
     def self.of(cmd)
-      out, err, sts = Open3.capture3 cmd
+      out = nil
+      err = nil
+      sts = open4(cmd) do |pid, stdin, stdout, stderr|
+        out = stdout.read
+        err = stderr.read
+      end
       new out, err, sts.exitstatus
     end
 

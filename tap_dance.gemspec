@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
 	spec.homepage      = "https://github.com/nybblr/tap_dance"
 	spec.license       = "MIT"
 
-	spec.required_ruby_version = '>= 1.9.1'
+	spec.required_ruby_version = '>= 1.8.7'
 
 	spec.files         = `git ls-files`.split($/)
 	spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
@@ -21,6 +21,8 @@ Gem::Specification.new do |spec|
 	spec.require_paths = ["lib", "ext"]
 
 	spec.add_dependency "thor"
+	spec.add_dependency "open4"
+
 	spec.add_development_dependency "bundler"
 	spec.add_development_dependency "rake"
 	spec.add_development_dependency "rspec"
