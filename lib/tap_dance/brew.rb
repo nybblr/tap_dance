@@ -6,6 +6,7 @@ module TapDance
     attr_accessor :name
     attr_accessor :version
     attr_accessor :tap
+    attr_accessor :filters
 
     def initialize(name, version=nil, opts={})
       @opts    = opts.dup
@@ -13,6 +14,7 @@ module TapDance
       @version = version
       @tap     = @opts[:tap]
       @flags   = @opts[:flags] || []
+      @filters = @opts[:filters] || []
 
       # Get actual tap object
       unless @tap.nil?

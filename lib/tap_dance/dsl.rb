@@ -3,6 +3,8 @@ require 'tap_dance/brew'
 require 'tap_dance/tap'
 require 'tap_dance/ui'
 
+require 'tap_dance/filter/dsl'
+
 class BrewfileError < RuntimeError; end
 module TapDance
   class DSL
@@ -15,8 +17,9 @@ module TapDance
     end
 
     def initialize
-      @groups = [] # Arg/filter groups
-      @tap   = nil # Current tap scope
+      @filters = [] # Arg/filter groups
+      @tap     = nil # Current tap scope
+      @brew    = nil # Used to prevent nesting and add filters
 
       @definition = Definition.new
     end
@@ -47,7 +50,11 @@ module TapDance
       @tap = old_tap
     end
 
-    def brew(name, version=nil, opts=nil)
+    def brew(name, version=nil, opts=nil, &block)
+      # Can't nest brews; doesn't make sense
+      raise BrewfileError, "You cannot nest brews!" unless @brew.nil?
+      old_brew = @brew
+
       # Was version omitted?
       if opts.nil? && version.is_a?(Hash)
         opts = version
@@ -55,7 +62,12 @@ module TapDance
       end
       opts ||= {}
 
-      @definition.brew name, version, { :tap => @tap }.merge(opts)
+      @brew = @definition.brew name, version, { :tap => @tap }.merge(opts)
+
+      # Evaluate filters
+      @brew.filters = Filter::DSL.evaluate(&block) if block_given?
+
+      @brew = old_brew
     end
 
   end
