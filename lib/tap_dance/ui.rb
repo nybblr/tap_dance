@@ -4,44 +4,12 @@ module TapDance
   class UI
     attr_reader :log
 
-    def warn(message, newline = nil)
-    end
-
-    def debug(message, newline = nil)
-    end
-
-    def trace(message, newline = nil)
-    end
-
-    def error(message, newline = nil)
-    end
-
-    def info(message, newline = nil)
-    end
-
-    def confirm(message, newline = nil)
-    end
-
-    def detail(message, newline = nil)
-    end
-
-    def debug?
-      false
-    end
-
-    def ask(message)
-    end
-
-    class Shell < UI
+    class Logger < UI
       LEVELS = %w(silent error warn detail confirm info debug)
 
       attr_writer :shell
 
       def initialize(options = {})
-        if options["no-color"] || !STDOUT.tty?
-          Thor::Base.shell = Thor::Shell::Basic
-        end
-        @shell = Thor::Base.shell.new
         @level = ENV['DEBUG'] ? "debug" : "info"
       end
 
@@ -110,23 +78,10 @@ module TapDance
     private
 
       def tell_me(msg, color = nil, newline = nil)
-        return if (msg.nil? || msg == "") && newline.nil?
-        msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
-        line = if newline.nil? then [] else [newline] end
-
-        if msg.is_a? ShellResult
-          unless msg.out.chomp == ""
-            @shell.say(msg.out.chomp, color, *line)
-            logger(msg.out.chomp, *line)
-          end
-
-          unless msg.err.chomp == ""
-            @shell.say(msg.err.chomp, :red)
-            logger(msg.err.chomp)
-          end
+        if newline.nil?
+          logger(msg)
         else
-          @shell.say(msg, color, *line)
-          logger(msg, *line)
+          logger(msg, newline)
         end
       end
 
@@ -135,25 +90,46 @@ module TapDance
         @log << message
         @log << $/ if newline
       end
+    end
+
+    class Shell < Logger
+
+      def initialize(options = {})
+        super
+
+        if options["no-color"] || !STDOUT.tty?
+          Thor::Base.shell = Thor::Shell::Basic
+        end
+        @shell = Thor::Base.shell.new
+      end
+
+    private
+
+      def tell_me(msg, color = nil, newline = nil)
+        msg = word_wrap(msg) if newline.is_a?(Hash) && newline[:wrap]
+
+        if msg.is_a? ShellResult
+          say(msg.out.chomp, color, newline)
+          say(msg.err.chomp, :red,  newline)
+        else
+          say(msg, color, newline)
+        end
+      end
+
+      def say(msg, color = nil, newline = nil)
+        return if (msg.nil? || msg == "") && newline.nil?
+
+        line = if newline.nil? then [] else [newline] end
+        @shell.say(msg, color, *line)
+        logger(msg, *line)
+      end
 
       def word_wrap(text, line_width = @shell.terminal_width)
         text.split("\n").collect do |line|
           line.length > line_width ? line.gsub(/(.{1,#{line_width}})(\s+|$)/, "\\1\n").strip : line
         end * "\n"
       end
-    end
 
-    class Logger < Shell
-
-    private
-
-      def tell_me(msg, color = nil, newline = nil)
-        if newline.nil?
-          logger(msg)
-        else
-          logger(msg, newline)
-        end
-      end
     end
   end
 end

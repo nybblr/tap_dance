@@ -15,7 +15,7 @@ module TapDance
     attr_writer :ui
 
     def ui
-      @ui ||= UI.new
+      @ui ||= UI::Logger.new
     end
   end
 end
