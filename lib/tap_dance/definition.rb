@@ -14,17 +14,13 @@ module TapDance
     end
 
     def tap(*args)
-      if args.last.is_a? Hash
-        args.last.merge!(:definition => self)
-      end
+      args.last[:definition] = self if args.last.is_a?(Hash)
       @taps << Tap.new(*args)
       @taps.last
     end
 
     def brew(*args)
-      if args.last.is_a? Hash
-        args.last.merge!(:definition => self)
-      end
+      args.last[:definition] = self if args.last.is_a?(Hash)
       @brews << Brew.new(*args)
       @brews.last
     end
