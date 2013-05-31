@@ -43,7 +43,7 @@ module TapDance
       raise BrewfileError, "You cannot nest taps!" unless @tap.nil?
       old_tap = @tap
 
-      @tap = @definition.tap name, url, opts
+      @tap = @definition.add :tap, name, url, opts
 
       yield if block_given?
 
@@ -62,7 +62,7 @@ module TapDance
       end
       opts ||= {}
 
-      @brew = @definition.brew name, version, { :tap => @tap }.merge(opts)
+      @brew = @definition.add :brew, name, version, { :tap => @tap }.merge(opts)
 
       # Evaluate filters
       @brew.filters = Filter::DSL.evaluate(&block) if block_given?
